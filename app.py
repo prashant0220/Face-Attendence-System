@@ -161,29 +161,62 @@ def start():
     names, rolls, times, l = extract_attendance()
 
     if 'face_recognition_model.pkl' not in os.listdir('static'):
-        return render_template('home.html', names=names, rolls=rolls, times=times, l=l, totalreg=totalreg(), datetoday2=datetoday2, mess='There is no trained model in the static folder. Please add a new face to continue.')
+        return render_template(
+            'home.html', 
+            names=names, rolls=rolls, times=times, l=l, 
+            totalreg=totalreg(), 
+            datetoday2=datetoday2, 
+            mess='There is no trained model in the static folder. Please add a new face to continue.'
+        )
 
-    ret = True
     cap = cv2.VideoCapture(0)
-    while ret:
+    ret = True
+    max_attempts = 200 # Limit the number of attempts
+    attempts = 0
+
+    while ret and attempts < max_attempts:
         ret, frame = cap.read()
-        if len(extract_faces(frame)) > 0:
-            (x, y, w, h) = extract_faces(frame)[0]
+        attempts += 1
+
+        faces = extract_faces(frame)
+        if len(faces) > 0:
+            (x, y, w, h) = faces[0]
             cv2.rectangle(frame, (x, y), (x+w, y+h), (86, 32, 251), 1)
             cv2.rectangle(frame, (x, y), (x+w, y-40), (86, 32, 251), -1)
             face = cv2.resize(frame[y:y+h, x:x+w], (50, 50))
-            identified_person = identify_face(face.reshape(1, -1))[0]
-            add_attendance(identified_person)
-            cv2.putText(frame, f'{identified_person}', (x+5, y-5),
-                        cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
-            break
+            
+            # Attempt to identify the face
+            identified_person = identify_face(face.reshape(1, -1))
+            if identified_person:
+                add_attendance(identified_person[0])
+                cv2.putText(frame, f'{identified_person[0]}', (x+5, y-5),
+                            cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
+                break
+
         cv2.imshow('Attendance', frame)
-        if cv2.waitKey(1) == 27:
+        if cv2.waitKey(1) == 27:  # Exit on ESC key
             break
+
     cap.release()
     cv2.destroyAllWindows()
+
+    # If no face was identified after the maximum attempts
+    if attempts >= max_attempts:
+        return render_template(
+            'home.html', 
+            names=names, rolls=rolls, times=times, l=l, 
+            totalreg=totalreg(), 
+            datetoday2=datetoday2, 
+            mess='No face detected or recognized. Please try again.'
+        )
+
     names, rolls, times, l = extract_attendance()
-    return render_template('home.html', names=names, rolls=rolls, times=times, l=l, totalreg=totalreg(), datetoday2=datetoday2)
+    return render_template(
+        'home.html', 
+        names=names, rolls=rolls, times=times, l=l, 
+        totalreg=totalreg(), 
+        datetoday2=datetoday2
+    )
 
 
 # A function to add a new user.

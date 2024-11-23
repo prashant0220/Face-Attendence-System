@@ -17,4 +17,6 @@ prenv/
 Thumbs.db
 
 
-static/faces/prashant_101
+static/faces
+static/face_recognition_model
+Attendance/
