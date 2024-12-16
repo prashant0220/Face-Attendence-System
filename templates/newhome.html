@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HomePage</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/home.css') }}">
+</head>
+<body>
+    <header class="navbar" style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
+        <div style="font-size: larger; color: white; text-align: center; display: flex; justify-content: center; align-items: center; gap: 4px; cursor: pointer;">
+            <img src="{{ url_for('static', filename='images/face-scan.png') }}" width="50px"  alt="">
+            <a href="/" style="color: white;"> FACE</a></div>
+        <div style="display: flex; flex-direction: row; gap: 30px; padding: 0 40px; font-size: 24px; color: white;">
+            <div class="attendance" style="cursor: pointer;"><a href="/attendance"> Attendance</a></div>
+            <div style="cursor: pointer;"><a href="#about" style="color: white;">About</a></div>
+            <div style="cursor: pointer;" ><a href="/listusers" style="color: white;">Student</a></div>
+        </div>
+    </header>
+
+    <div style="display: flex; justify-content: flex-end; padding: 0 30px; ">
+        <img src="{{ url_for('static', filename='images/artificial-intell.png') }}" alt="">
+    </div>
+
+    <div id="about">
+
+    </div>
+</body>
+</html>

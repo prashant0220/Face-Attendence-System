@@ -125,14 +125,19 @@ def deletefolder(duser):
 @app.route('/')
 def home():
     names, rolls, times, l = extract_attendance()
-    return render_template('home.html', names=names, rolls=rolls, times=times, l=l, totalreg=totalreg(), datetoday2=datetoday2)
+    return render_template('newHome.html', names=names, rolls=rolls, times=times, l=l, totalreg=totalreg(), datetoday2=datetoday2)
 
 
 ## List users page
 @app.route('/listusers')
 def listusers():
     userlist, names, rolls, l = getallusers()
-    return render_template('listusers.html', userlist=userlist, names=names, rolls=rolls, l=l, totalreg=totalreg(), datetoday2=datetoday2)
+    return render_template('student.html', userlist=userlist, names=names, rolls=rolls, l=l, totalreg=totalreg(), datetoday2=datetoday2)
+
+@app.route('/attendance')
+def attendance():
+    names, rolls, times, l = extract_attendance()
+    return render_template('attendance.html', names=names, rolls=rolls, times=times, l=l, totalreg=totalreg(), datetoday2=datetoday2)
 
 
 ## Delete functionality
@@ -203,7 +208,7 @@ def start():
     # If no face was identified after the maximum attempts
     if attempts >= max_attempts:
         return render_template(
-            'home.html', 
+            'attendance.html', 
             names=names, rolls=rolls, times=times, l=l, 
             totalreg=totalreg(), 
             datetoday2=datetoday2, 
@@ -212,7 +217,7 @@ def start():
 
     names, rolls, times, l = extract_attendance()
     return render_template(
-        'home.html', 
+        'attendance.html', 
         names=names, rolls=rolls, times=times, l=l, 
         totalreg=totalreg(), 
         datetoday2=datetoday2
@@ -251,8 +256,8 @@ def add():
     cv2.destroyAllWindows()
     print('Training Model')
     train_model()
-    names, rolls, times, l = extract_attendance()
-    return render_template('home.html', names=names, rolls=rolls, times=times, l=l, totalreg=totalreg(), datetoday2=datetoday2)
+    userlist, names, rolls, l = getallusers()
+    return render_template('student.html', userlist=userlist, names=names, rolls=rolls, l=l, totalreg=totalreg(), datetoday2=datetoday2)
 
 
 # Our main function which runs the Flask App

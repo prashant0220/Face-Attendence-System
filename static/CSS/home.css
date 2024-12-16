@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+
+
+body{
+    padding: 0;
+    margin: 0;
+    font-family: "Roboto", serif;
+  font-weight: 300;
+  font-style: normal;
+}
+.navbar{
+    background-color: #274374;
+    height: 60px;
+    padding: 0 24px;
+}
+
+.attendance{
+    font-size: 24px;
+    font-weight: 600;
+    background: linear-gradient(
+        91deg,
+        rgba(255, 227, 78, 1) 0%,
+        rgba(255, 84, 61, 1) 20%,
+        rgba(255, 108, 226, 1) 40%,
+        rgba(255, 108, 226, 1) 60%,
+        rgba(123, 203, 255, 1) 80%,
+        rgba(40, 255, 114, 1) 100%
+      );
+      background-repeat: no-repeat;
+      background-size: 800%;
+      animation: animate 2s linear infinite;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: rgba(255, 255, 255, 0);
+}
+
+@keyframes animate {
+    0% {
+      background-position: 0%;
+    }
+    100% {
+      background-position: 100%;
+    }
+  }
+
