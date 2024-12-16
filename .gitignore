@@ -18,5 +18,5 @@ Thumbs.db
 
 
 static/faces
-static/face_recognition_model
+static/face_recognition_model.pkl
 Attendance/

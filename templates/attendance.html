@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/attendance.css') }}">
+</head>
+<body>
+    <header class="navbar" style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
+        <div style="font-size: larger; color: white; text-align: center; display: flex; justify-content: center; align-items: center; gap: 4px; cursor: pointer;">
+            <img src="{{ url_for('static', filename='images/face-scan.png') }}" width="50px"  alt=""> 
+            <a href="/" style="color: white;"> FACE</a></div>
+        <div style="display: flex; flex-direction: row; gap: 30px; padding: 0 40px; font-size: 24px; color: white;">
+            <div class="attendance" style="cursor: pointer;"><a href="/attendance"> Attendance</a></div>
+            <!-- <div style="cursor: pointer;">About</div> -->
+            <div style="cursor: pointer;"><a href="/listusers" style="color: white;">Student</a></div>
+        </div>
+    </header>
+
+    <div style="width: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+        {% if mess%}
+        <p class="text-center" style="color: red;font-size: 20px;">{{ mess }}</p>
+        {% endif %}
+        <div style="font-size: 24px;font-weight: 700; text-align: center; justify-content: center; margin-top: 20px;">Today's Attendance</div>
+
+        <div>
+            <a style="text-decoration: none;max-width: 200px;" href="/start">
+                <button
+                    style="font-size: 24px;font-weight: bold; border:none; color: white; border-radius: 10px;width:300px;padding: 10px;margin-top: 30px;margin-bottom: 30px; background-color: #0d6efd;"
+                    type='submit' class='btn btn-primary'>Take Attendance 
+                    <!-- <i class="material-icons">beenhere</i> -->
+                </button>
+            </a>
+        </div>
+        <table style="  border-collapse: collapse; border: none; width: 50%; margin-top: 30px; margin-left: 20px;">
+
+            <thead style="background-color: #274374; color: white;  border-radius: 4px; text-align: left;">
+                <tr style="height: 40px; border-radius: 4px;">
+                    <th style="padding-left: 8px; width: 25%;">S.NO</th>
+                    <th style="padding-left: 8px; width: 25%;">ID</th>
+                    <th style="padding-left: 8px; width: 30%; text-align: left">Name</th>
+                    <th style="padding-left: 8px; width: 20%; text-align: left">Time</th>
+                </tr>
+            </thead>
+            {% if l %}
+
+                {% for i in range(l) %}
+            <tbody style="font-size: 16px; font-weight: 400; color: #08090A; text-align: left; ">
+                <tr style="border-bottom: 1px solid #EDEDF0; height: 30px;">
+                    <td style="padding-left: 4px;">{{ i+1 }}</td>
+                    <td>{{ rolls[i] }}</td>
+                    <td>{{ names[i] }}</td>
+                    <td>{{ times[i] }}</td>
+                    
+                </tr>
+                {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

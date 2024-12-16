@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/student.css') }}">
+</head>
+
+<body>
+    <header class="navbar"
+        style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
+        <div
+            style="font-size: larger; color: white; text-align: center; display: flex; justify-content: center; align-items: center; gap: 4px; cursor: pointer;">
+            <img src="{{ url_for('static', filename='images/face-scan.png') }}" width="50px" alt="">
+            <a href="/" style="color: white;"> FACE</a>
+        </div>
+        <div style="display: flex; flex-direction: row; gap: 30px; padding: 0 40px; font-size: 24px; color: white;">
+            <div class="attendance" style="cursor: pointer;"><a href="/attendance"> Attendance</a></div>
+            <!-- <div style="cursor: pointer;">About</div> -->
+            <div style="cursor: pointer;"><a href="/listusers" style="color: white;">Student</a></div>
+        </div>
+    </header>
+    <div>
+        <div onclick="showModal()"
+            style="display: flex; cursor: pointer; float: right; margin-right: 180px; background-color: #212529; width: 130px; padding: 6px; border-radius: 4px; color: white;">
+            Add New Student</div>
+        <table style="  border-collapse: collapse; border: none; width: 50%; margin-top: 100px; margin-left: 200px;">
+            <thead style="background-color: #274374; color: white;  border-radius: 4px; text-align: left;">
+                <tr style="height: 40px; border-radius: 4px;">
+                    <th style="padding-left: 8px; width: 25%;">S.NO</th>
+                    <th style="padding-left: 8px; width: 25%;">ID</th>
+                    <th style="padding-left: 8px; width: 50%; text-align: left">Name</th>
+                </tr>
+            </thead>
+            {% if l %}
+
+                {% for i in range(l) %}
+            <tbody style="font-size: 16px; font-weight: 400; color: #08090A; ">
+                <tr style="border-bottom: 1px solid #EDEDF0; height: 30px;">
+                    <td style="padding-left: 4px;">{{ i+1 }}</td>
+                    <td>{{ rolls[i] }}</td>
+                    <td>{{ names[i] }}</td>
+                </tr>
+                {% endfor %}
+                {% endif %}
+
+            </tbody>
+        </table>
+
+        
+        <div id="modal" style="display: none;" class="modal-container hidden">
+            <div class="modal-content">
+                <div  onclick="closeModal()" style="float: right; margin-right: 20px; margin-bottom: 5px; cursor: pointer;">X</div>
+                <form action="/add" method="POST" enctype="multipart/form-data">
+                    <h2 class="modal-header">
+                        Add New User <i class="material-icons">control_point_duplicate</i>
+                    </h2>
+                    <label class="modal-label"><b>Enter New User Name*</b></label>
+                    <input type="text" id="newusername" name="newusername" class="modal-input" required>
+                    
+                    <label class="modal-label"><b>Enter New User ID*</b></label>
+                    <input type="number" id="newuserid" name="newuserid" class="modal-input" required>
+                    
+                    <button type="submit" class="modal-button">Add New User</button>
+                    <h5 class="modal-footer"><i>Total Users in Database: {{totalreg}}</i></h5>
+                </form>
+            </div>
+        </div>
+        
+
+
+       
+    </div>
+
+    <script>
+        function showModal() {
+            const modal = document.getElementById("modal");
+            modal.style.display = "flex";
+        }
+
+        function closeModal (){
+            const modal = document.getElementById("modal");
+            modal.style.display = "none";
+        }
+    </script>
+</body>
+
+</html>
