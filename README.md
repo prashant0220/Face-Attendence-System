@@ -1,24 +1,24 @@
-##Face Recognition Attendance System
+## Face Recognition Attendance System
 
 A Flask-based app for automating attendance using facial recognition.
 
-#Features
+# Features
 
--Face registration and recognition.
+- Face registration and recognition.
 
--Attendance saved daily in CSV format.
+- Attendance saved daily in CSV format.
 
--Web-based UI for user management and tracking.
+- Web-based UI for user management and tracking.
 
--Dynamic model training with OpenCV and KNN.
+- Dynamic model training with OpenCV and KNN.
 
-#Requirements
+# Requirements
 
--Python 3.x, Webcam.
+- Python 3.x, Webcam.
 
--Install dependencies: pip install flask opencv-python-headless numpy pandas scikit-learn joblib
+- Install dependencies: pip install flask opencv-python-headless numpy pandas scikit-learn joblib
 
-#Setup
+# Setup
 
 -Clone the repo and navigate to the folder.
 
@@ -28,7 +28,7 @@ A Flask-based app for automating attendance using facial recognition.
 
 -Open http://127.0.0.1:5000/ in a browser.
 
-#Project Structure
+# Project Structure
 
 -app.py: Main application file.
 
