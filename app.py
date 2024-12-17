@@ -1,6 +1,6 @@
 import cv2
 import os
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect, url_for
 from datetime import date
 from datetime import datetime
 import numpy as np
@@ -143,21 +143,34 @@ def attendance():
 ## Delete functionality
 @app.route('/deleteuser', methods=['GET'])
 def deleteuser():
-    duser = request.args.get('user')
-    deletefolder('static/faces/'+duser)
+    username = request.args.get('username')
+    roll = request.args.get('roll')
 
-    ## if all the face are deleted, delete the trained file...
-    if os.listdir('static/faces/')==[]:
-        os.remove('static/face_recognition_model.pkl')
-    
+    if not username or not roll:
+        return "Username or Roll Number missing", 400  # Handle missing input
+
+    # Construct the folder name based on username and roll
+    folder_name = f"{username}_{roll}"
+    folder_path = os.path.join('static/faces', folder_name)
+
+    # Check if the folder exists and delete it
+    if os.path.exists(folder_path):
+        deletefolder(folder_path)
+    else:
+        return f"User folder '{folder_name}' not found", 404  # Handle non-existing folder
+
+    # If all folders are deleted, remove the trained model file
+    if not os.listdir('static/faces/'):
+        if os.path.exists('static/face_recognition_model.pkl'):
+            os.remove('static/face_recognition_model.pkl')
+
     try:
-        train_model()
-    except:
-        pass
+        train_model()  # Retrain the model after deletion
+    except Exception as e:
+        print(f"Error retraining model: {e}")
 
     userlist, names, rolls, l = getallusers()
-    return render_template('listusers.html', userlist=userlist, names=names, rolls=rolls, l=l, totalreg=totalreg(), datetoday2=datetoday2)
-
+    return redirect(url_for('listusers'))
 
 # Our main Face Recognition functionality. 
 # This function will run when we click on Take Attendance Button.
@@ -216,12 +229,7 @@ def start():
         )
 
     names, rolls, times, l = extract_attendance()
-    return render_template(
-        'attendance.html', 
-        names=names, rolls=rolls, times=times, l=l, 
-        totalreg=totalreg(), 
-        datetoday2=datetoday2
-    )
+    return redirect(url_for('attendance'))
 
 
 # A function to add a new user.
@@ -257,7 +265,7 @@ def add():
     print('Training Model')
     train_model()
     userlist, names, rolls, l = getallusers()
-    return render_template('student.html', userlist=userlist, names=names, rolls=rolls, l=l, totalreg=totalreg(), datetoday2=datetoday2)
+    return redirect(url_for('listusers'))
 
 
 # Our main function which runs the Flask App
