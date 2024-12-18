@@ -18,16 +18,24 @@
         </div>
         <div style="display: flex; flex-direction: row; gap: 30px; padding: 0 40px; font-size: 24px; color: white;">
             <div class="attendance" style="cursor: pointer;"><a href="/attendance"> Attendance</a></div>
-            <!-- <div style="cursor: pointer;">About</div> -->
             <div style="cursor: pointer;"><a href="/listusers" style="color: white;">Student</a></div>
         </div>
     </header>
+
     <div>
-        <div onclick="showModal()"
+        <!-- Buttons -->
+        <div onclick="showModal('deleteModal')"
             style="display: flex; cursor: pointer; float: right; margin-right: 180px; background-color: #212529; width: 130px; padding: 6px; border-radius: 4px; color: white;">
-            Add New Student</div>
-        <table style="  border-collapse: collapse; border: none; width: 50%; margin-top: 100px; margin-left: 200px;">
-            <thead style="background-color: #274374; color: white;  border-radius: 4px; text-align: left;">
+            Delete Student
+        </div>
+        <div onclick="showModal('addModal')"
+            style="display: flex; cursor: pointer; float: right; margin-right: 180px; background-color: #212529; width: 130px; padding: 6px; border-radius: 4px; color: white;">
+            Add New Student
+        </div>
+
+        <!-- Table -->
+        <table style="border-collapse: collapse; border: none; width: 50%; margin-top: 100px; margin-left: 200px;">
+            <thead style="background-color: #274374; color: white; border-radius: 4px; text-align: left;">
                 <tr style="height: 40px; border-radius: 4px;">
                     <th style="padding-left: 8px; width: 25%;">S.NO</th>
                     <th style="padding-left: 8px; width: 25%;">ID</th>
@@ -35,49 +43,72 @@
                 </tr>
             </thead>
             {% if l %}
-
-                {% for i in range(l) %}
-            <tbody style="font-size: 16px; font-weight: 400; color: #08090A; ">
+            {% for i in range(l) %}
+            <tbody style="font-size: 16px; font-weight: 400; color: #08090A;">
                 <tr style="border-bottom: 1px solid #EDEDF0; height: 30px;">
                     <td style="padding-left: 4px;">{{ i+1 }}</td>
                     <td>{{ rolls[i] }}</td>
                     <td>{{ names[i] }}</td>
                 </tr>
-                {% endfor %}
-                {% endif %}
-
             </tbody>
+            {% endfor %}
+            {% endif %}
         </table>
 
-        
-        <div id="modal" style="display: none;" class="modal-container hidden">
+        <!-- Delete User Modal -->
+        <div id="deleteModal" style="display: none;" class="modal-container hidden">
             <div class="modal-content">
-                <div  onclick="closeModal()" style="float: right; margin-right: 20px; margin-bottom: 5px; cursor: pointer;">X</div>
+                <div onclick="closeModal('deleteModal')" style="float: right; margin-right: 20px; margin-bottom: 5px; cursor: pointer;">X</div>
                 <form action="/deleteuser" method="GET">
-                    <label for="username">Enter Username:</label>
-                    <input type="text" id="username" name="username" placeholder="Enter username" required>
-                    <br><br>
-                    <label for="roll">Enter Roll Number:</label>
-                    <input type="text" id="roll" name="roll" placeholder="Enter roll number" required>
+                    <label for="username">Select User:</label>
+                    <select id="username" name="user" required>
+                        <option value="" disabled selected>-- Select a user --</option>
+                        {% for user in usernames_with_rolls %}
+                        <option value="{{ user }}">{{ user }}</option>
+                        {% endfor %}
+                    </select>
                     <br><br>
                     <button type="submit">Delete User</button>
                 </form>
             </div>
         </div>
-        
 
-
-       
+        <!-- Add User Modal -->
+        <div id="addModal" style="display: none;" class="modal-container hidden">
+            <div class="modal-content">
+                <div onclick="closeModal('addModal')" style="float: right; margin-right: 20px; margin-bottom: 5px; cursor: pointer;">X</div>
+                <form action='/add' method="POST" enctype="multipart/form-data">
+                    <h2 style="border-radius: 20px 20px 0px 0px;background-color: #0b4c61;color: white;padding: 10px;">
+                        Add New User
+                    </h2>
+                    <label style="font-size: 20px;"><b>Enter New User Name*</b></label>
+                    <br>
+                    <input type="text" id="newusername" name='newusername'
+                        style="font-size: 20px;margin-top:10px;margin-bottom:10px;" required>
+                    <br>
+                    <label style="font-size: 20px;"><b>Enter New User Id*</b></label>
+                    <br>
+                    <input type="number" id="newusereid" name='newuserid'
+                        style="font-size: 20px;margin-top:10px;margin-bottom:10px;" required>
+                    <br>
+                    <button style="width: 232px;margin-top: 20px;font-size: 20px;" type='submit' class='btn btn-dark'>
+                        Add New User
+                    </button>
+                    <br>
+                    <h5 style="padding: 25px;"><i>Total Users in Database: {{totalreg}}</i></h5>
+                </form>
+            </div>
+        </div>
     </div>
 
     <script>
-        function showModal() {
-            const modal = document.getElementById("modal");
+        function showModal(modalId) {
+            const modal = document.getElementById(modalId);
             modal.style.display = "flex";
         }
 
-        function closeModal (){
-            const modal = document.getElementById("modal");
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
             modal.style.display = "none";
         }
     </script>
