@@ -132,7 +132,8 @@ def home():
 @app.route('/listusers')
 def listusers():
     userlist, names, rolls, l = getallusers()
-    return render_template('student.html', userlist=userlist, names=names, rolls=rolls, l=l, totalreg=totalreg(), datetoday2=datetoday2)
+    usernames_with_rolls = [f"{name}_{roll}" for name, roll in zip(names, rolls)]
+    return render_template('student.html', userlist=userlist, names=names, rolls=rolls, l=l, totalreg=totalreg(), datetoday2=datetoday2,usernames_with_rolls=usernames_with_rolls)
 
 @app.route('/attendance')
 def attendance():
@@ -143,21 +144,18 @@ def attendance():
 ## Delete functionality
 @app.route('/deleteuser', methods=['GET'])
 def deleteuser():
-    username = request.args.get('username')
-    roll = request.args.get('roll')
+    duser = request.args.get('user')  # Example: "sumit_001"
 
-    if not username or not roll:
-        return "Username or Roll Number missing", 400  # Handle missing input
+    if not duser:
+        return "No user selected", 400  # Handle missing input
 
-    # Construct the folder name based on username and roll
-    folder_name = f"{username}_{roll}"
-    folder_path = os.path.join('static/faces', folder_name)
+    folder_path = os.path.join('static/faces', duser)
 
     # Check if the folder exists and delete it
     if os.path.exists(folder_path):
         deletefolder(folder_path)
     else:
-        return f"User folder '{folder_name}' not found", 404  # Handle non-existing folder
+        return f"User folder '{duser}' not found", 404  # Handle non-existing folder
 
     # If all folders are deleted, remove the trained model file
     if not os.listdir('static/faces/'):
@@ -180,7 +178,7 @@ def start():
 
     if 'face_recognition_model.pkl' not in os.listdir('static'):
         return render_template(
-            'home.html', 
+            'attendance.html', 
             names=names, rolls=rolls, times=times, l=l, 
             totalreg=totalreg(), 
             datetoday2=datetoday2, 
