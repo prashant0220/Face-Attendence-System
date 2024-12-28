@@ -1,64 +1,61 @@
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student</title>
+    <title>Student Management</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='CSS/student.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 
 <body>
-    <header class="navbar"
-        style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
-        <div
-            style="font-size: larger; color: white; text-align: center; display: flex; justify-content: center; align-items: center; gap: 4px; cursor: pointer;">
-            <img src="{{ url_for('static', filename='images/face-scan.png') }}" width="50px" alt="">
-            <a href="/" style="color: white;"> FACE</a>
+    <!-- Header -->
+    <header class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/face-scan.png') }}" width="50px" alt="Logo">
+            <a href="/" class="brand">F.A.CE</a>
         </div>
-        <div style="display: flex; flex-direction: row; gap: 30px; padding: 0 40px; font-size: 24px; color: white;">
-            <div class="attendance" style="cursor: pointer;"><a href="/attendance"> Attendance</a></div>
-            <div style="cursor: pointer;"><a href="/listusers" style="color: white;">Student</a></div>
-        </div>
+        <nav class="nav-links">
+            <a href="/attendance" class="nav-item">Attendance</a>
+            <a href="/listusers" class="nav-item">Student</a>
+        </nav>
     </header>
 
-    <div>
-        <!-- Buttons -->
-        <div onclick="showModal('deleteModal')"
-            style="display: flex; cursor: pointer; float: right; margin-right: 180px; background-color: #212529; width: 130px; padding: 6px; border-radius: 4px; color: white;">
-            Delete Student
-        </div>
-        <div onclick="showModal('addModal')"
-            style="display: flex; cursor: pointer; float: right; margin-right: 180px; background-color: #212529; width: 130px; padding: 6px; border-radius: 4px; color: white;">
-            Add New Student
+    <!-- Main Content -->
+    <main>
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button onclick="showModal('addModal')" class="btn btn-add">Add New Student</button>
+            <button onclick="showModal('deleteModal')" class="btn btn-delete">Delete Student</button>
         </div>
 
-        <!-- Table -->
-        <table style="border-collapse: collapse; border: none; width: 50%; margin-top: 100px; margin-left: 200px;">
-            <thead style="background-color: #274374; color: white; border-radius: 4px; text-align: left;">
-                <tr style="height: 40px; border-radius: 4px;">
-                    <th style="padding-left: 8px; width: 25%;">S.NO</th>
-                    <th style="padding-left: 8px; width: 25%;">ID</th>
-                    <th style="padding-left: 8px; width: 50%; text-align: left">Name</th>
+        <!-- Student Table -->
+        <table class="student-table">
+            <thead>
+                <tr>
+                    <th>S.NO</th>
+                    <th>ID</th>
+                    <th>Name</th>
                 </tr>
             </thead>
-            {% if l %}
-            {% for i in range(l) %}
-            <tbody style="font-size: 16px; font-weight: 400; color: #08090A;">
-                <tr style="border-bottom: 1px solid #EDEDF0; height: 30px;">
-                    <td style="padding-left: 4px;">{{ i+1 }}</td>
+            <tbody>
+                {% if l %}
+                {% for i in range(l) %}
+                <tr>
+                    <td>{{ i+1 }}</td>
                     <td>{{ rolls[i] }}</td>
                     <td>{{ names[i] }}</td>
                 </tr>
+                {% endfor %}
+                {% endif %}
             </tbody>
-            {% endfor %}
-            {% endif %}
         </table>
 
-        <!-- Delete User Modal -->
-        <div id="deleteModal" style="display: none;" class="modal-container hidden">
+        <!-- Delete Modal -->
+        <div id="deleteModal" class="modal hidden">
             <div class="modal-content">
-                <div onclick="closeModal('deleteModal')" style="float: right; margin-right: 20px; margin-bottom: 5px; cursor: pointer;">X</div>
+                <button class="close-btn" onclick="closeModal('deleteModal')">&times;</button>
+                <h2>Delete User</h2>
                 <form action="/deleteuser" method="GET">
                     <label for="username">Select User:</label>
                     <select id="username" name="user" required>
@@ -67,49 +64,37 @@
                         <option value="{{ user }}">{{ user }}</option>
                         {% endfor %}
                     </select>
-                    <br><br>
-                    <button type="submit">Delete User</button>
+                    <button type="submit" class="btn btn-delete">Delete</button>
                 </form>
             </div>
         </div>
 
-        <!-- Add User Modal -->
-        <div id="addModal" style="display: none;" class="modal-container hidden">
+        <!-- Add Modal -->
+        <div id="addModal" class="modal hidden">
             <div class="modal-content">
-                <div onclick="closeModal('addModal')" style="float: right; margin-right: 20px; margin-bottom: 5px; cursor: pointer;">X</div>
-                <form action='/add' method="POST" enctype="multipart/form-data">
-                    <h2 style="border-radius: 20px 20px 0px 0px;background-color: #0b4c61;color: white;padding: 10px;">
-                        Add New User
-                    </h2>
-                    <label style="font-size: 20px;"><b>Enter New User Name*</b></label>
-                    <br>
-                    <input type="text" id="newusername" name='newusername'
-                        style="font-size: 20px;margin-top:10px;margin-bottom:10px;" required>
-                    <br>
-                    <label style="font-size: 20px;"><b>Enter New User Id*</b></label>
-                    <br>
-                    <input type="number" id="newusereid" name='newuserid'
-                        style="font-size: 20px;margin-top:10px;margin-bottom:10px;" required>
-                    <br>
-                    <button style="width: 232px;margin-top: 20px;font-size: 20px;" type='submit' class='btn btn-dark'>
-                        Add New User
-                    </button>
-                    <br>
-                    <h5 style="padding: 25px;"><i>Total Users in Database: {{totalreg}}</i></h5>
+                <button class="close-btn" onclick="closeModal('addModal')">&times;</button>
+                <h2>Add New User</h2>
+                <form action="/add" method="POST" enctype="multipart/form-data">
+                    <label for="newusername">Enter New User Name*</label>
+                    <input type="text" id="newusername" name="newusername" required>
+
+                    <label for="newuserid">Enter New User ID*</label>
+                    <input type="number" id="newuserid" name="newuserid" required>
+
+                    <button type="submit" class="btn btn-add">Add User</button>
                 </form>
+                <p>Total Users in Database: <strong>{{ totalreg }}</strong></p>
             </div>
         </div>
-    </div>
+    </main>
 
     <script>
         function showModal(modalId) {
-            const modal = document.getElementById(modalId);
-            modal.style.display = "flex";
+            document.getElementById(modalId).classList.remove('hidden');
         }
 
         function closeModal(modalId) {
-            const modal = document.getElementById(modalId);
-            modal.style.display = "none";
+            document.getElementById(modalId).classList.add('hidden');
         }
     </script>
 </body>

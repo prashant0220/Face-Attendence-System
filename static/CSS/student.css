@@ -1,130 +1,127 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 
-
-body{
-    padding: 0;
+body {
     margin: 0;
-    font-family: "Roboto", serif;
-  font-weight: 300;
-  font-style: normal;
+    font-family: 'Roboto', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
 }
-.navbar{
+
+.navbar {
     background-color: #274374;
-    height: 60px;
-    padding: 0 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 24px;
+    color: white;
 }
 
-.attendance{
-    font-size: 24px;
-    font-weight: 600;
-    background: linear-gradient(
-        91deg,
-        rgba(255, 227, 78, 1) 0%,
-        rgba(255, 84, 61, 1) 20%,
-        rgba(255, 108, 226, 1) 40%,
-        rgba(255, 108, 226, 1) 60%,
-        rgba(123, 203, 255, 1) 80%,
-        rgba(40, 255, 114, 1) 100%
-      );
-      background-repeat: no-repeat;
-      background-size: 800%;
-      animation: animate 2s linear infinite;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: rgba(255, 255, 255, 0);
-}
-
-@keyframes animate {
-    0% {
-      background-position: 0%;
-    }
-    100% {
-      background-position: 100%;
-    }
-  }
-
-
-
-
-
-
-.modal-container {
-    display: none;
-    position: fixed;
-    inset: 0; 
+.logo {
     display: flex;
     align-items: center;
-    justify-content: center;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
+    gap: 10px;
 }
 
-
-.modal-content {
-    background-color: rgba(211, 211, 211, 0.9); 
-    width: 400px;
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    position: relative;
-}
-
-
-.modal-header {
-    background-color: #0b4c61;
+.brand {
+    font-size: 24px;
+    text-decoration: none;
     color: white;
-    padding: 15px;
-    border-radius: 20px 20px 0 0;
-    font-size: 1.5rem;
-    margin-bottom: 20px;
+    font-weight: bold;
 }
 
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
 
-.modal-label {
-    display: block;
-    font-size: 1rem;
-    font-weight: bold;
-    margin-top: 10px;
-    margin-bottom: 5px;
+.nav-item {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+}
+
+.nav-item:hover {
+    text-decoration: underline;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+    margin: 20px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    color: white;
+}
+
+.btn-add {
+    background-color: #28a745;
+}
+
+.btn-delete {
+    background-color: #dc3545;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+.student-table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.student-table th, .student-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
     text-align: left;
 }
 
-
-.modal-input {
-    width: 100%;
-    font-size: 1rem;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-sizing: border-box;
-}
-
-
-.modal-button {
-    width: 100%;
-    font-size: 1rem;
-    padding: 10px;
-    background-color: #0b4c61;
+.student-table th {
+    background-color: #274374;
     color: white;
-    border: none;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
     border-radius: 8px;
+    width: 400px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.modal-button:hover {
-    background-color: #084151;
-}
-
-
-.modal-footer {
-    margin-top: 20px;
-    font-size: 0.9rem;
-    color: #555;
-}
-
-input {
-    outline: none;
+    float: right;
 }

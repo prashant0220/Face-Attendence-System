@@ -5,25 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HomePage</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='CSS/home.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <header class="navbar" style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
-        <div style="font-size: larger; color: white; text-align: center; display: flex; justify-content: center; align-items: center; gap: 4px; cursor: pointer;">
-            <img src="{{ url_for('static', filename='images/face-scan.png') }}" width="50px"  alt="">
-            <a href="/" style="color: white;"> FACE</a></div>
-        <div style="display: flex; flex-direction: row; gap: 30px; padding: 0 40px; font-size: 24px; color: white;">
-            <div class="attendance" style="cursor: pointer;"><a href="/attendance"> Attendance</a></div>
-            <div style="cursor: pointer;"><a href="#about" style="color: white;">About</a></div>
-            <div style="cursor: pointer;" ><a href="/listusers" style="color: white;">Student</a></div>
+    <!-- Header Section -->
+    <header class="navbar">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='images/face-scan.png') }}" alt="Face Logo">
+            <a href="/">FACE</a>
         </div>
+        <nav class="nav-links">
+            <a href="/attendance" class="nav-link attendance"><i class="fas fa-check-circle"></i> Attendance</a>
+            <a href="#about" class="nav-link"><i class="fas fa-info-circle"></i> About</a>
+            <a href="/listusers" class="nav-link"><i class="fas fa-user-graduate"></i> Students</a>
+        </nav>
     </header>
 
-    <div style="display: flex; justify-content: flex-end; padding: 0 30px; ">
-        <img src="{{ url_for('static', filename='images/artificial-intell.png') }}" alt="">
-    </div>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Welcome to FACE</h1>
+            <p>Revolutionizing attendance management with advanced facial recognition technology.</p>
+            <a href="#about" class="btn">Learn More</a>
+        </div>
+        <div class="hero-image">
+            <img src="{{ url_for('static', filename='images/artificial-intell.png') }}" alt="Artificial Intelligence">
+        </div>
+    </section>
 
-    <div id="about">
-
-    </div>
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <h2>About FACE</h2>
+            <p>
+                FACE is an innovative solution that blends cutting-edge facial recognition technology 
+                with user-friendly tools for seamless attendance tracking. From schools to corporate offices, 
+                our system is designed to enhance efficiency and accuracy while ensuring a hassle-free experience.
+            </p>
+            <div class="features">
+                <div class="feature-card">
+                    <i class="fas fa-fingerprint"></i>
+                    <h3>Secure</h3>
+                    <p>Advanced encryption ensures data safety and user privacy.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-clock"></i>
+                    <h3>Efficient</h3>
+                    <p>Quick and reliable attendance tracking in seconds.</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Scalable</h3>
+                    <p>Adaptable to organizations of all sizes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 </body>
 </html>
